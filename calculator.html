@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input id="n1" type="number"><br><br>
+     <input id="n2" type="number"><br><br>
+     <button onclick="add()">add</button>
+     <p id="result"></p>
+ 
+     <script>
+        function add(){
+        let a=Number(document.getElementById("n1").value);
+        let b=Number(document.getElementById("n2").value);
+        document.getElementById("result").innerHTML= " result is:" +( a+b);
+        }
+     </script>
+</body>
+</html>
