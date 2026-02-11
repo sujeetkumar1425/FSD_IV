@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="clock"></h2>
+    <script>
+        setInterval(()=>{
+            let time=new Date();
+            document.getElementById("clock").innerHTML=time.toLocaleTimeString();;
+        },2000)
+    </script>
+</body>
+</html>
