@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Name: -->
+    <input id="name" type="text" placeholder="Enter Your Name"><br><br>
+    <!-- Email: -->
+    <input type="email" id="email" placeholder="Enter Email"><br><br>
+    <!-- phone No: -->
+    <input type="number" name="" id="marks" placeholder="Phone Number"><br><br>
+    <button  id="name" onClick="addStudent()">Add</button>
+    <script>
+        let student=[];
+        let emailset=new set();
+        let gardeMap=new Map()
+        function addStudent(){
+            try{
+                // debugging( k liye)
+                debugger;
+                const name=document.getElementById("name").value;
+                const email=document.getElementById("email").value;
+                const marks=Number(document.getElementById("name").value);
+                //REGEX Validation
+                const emailPatter = /^[^\s@]+@[^\S@]+\,[^\S@]+$/;
+                if(!emailPatter.test(email)){
+                    throw new error("invalid email format");
+                    
+                }
+                if(marks<0 || marks>100){
+                    throw new error("invalid marks format");
+                }
+                if(emailset.has(email)){
+                    throw new error("emnail already exist");
+                    
+                }
+                emailSet.add(email);
+
+                
+
+            }
+
+        }
+    </script>
+</body>
+</html>
