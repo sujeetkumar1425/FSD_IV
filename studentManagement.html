@@ -1,49 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Smart Student Manager</title>
 </head>
 <body>
-    <!-- Name: -->
-    <input id="name" type="text" placeholder="Enter Your Name"><br><br>
-    <!-- Email: -->
-    <input type="email" id="email" placeholder="Enter Email"><br><br>
-    <!-- phone No: -->
-    <input type="number" name="" id="marks" placeholder="Phone Number"><br><br>
-    <button  id="name" onClick="addStudent()">Add</button>
-    <script>
-        let student=[];
-        let emailset=new set();
-        let gardeMap=new Map()
-        function addStudent(){
-            try{
-                // debugging( k liye)
-                debugger;
-                const name=document.getElementById("name").value;
-                const email=document.getElementById("email").value;
-                const marks=Number(document.getElementById("name").value);
-                //REGEX Validation
-                const emailPatter = /^[^\s@]+@[^\S@]+\,[^\S@]+$/;
-                if(!emailPatter.test(email)){
-                    throw new error("invalid email format");
-                    
-                }
-                if(marks<0 || marks>100){
-                    throw new error("invalid marks format");
-                }
-                if(emailset.has(email)){
-                    throw new error("emnail already exist");
-                    
-                }
-                emailSet.add(email);
 
-                
+<h2>Smart Student Manager</h2>
 
-            }
+<input type="text" id="name" placeholder="Enter Name">
+<input type="text" id="email" placeholder="Enter Email">
+<input type="number" id="marks" placeholder="Enter Marks">
+<button onclick="addStudent()">Add Student</button> 
+<button onclick="delStudent()">Delete</button>
 
+
+<!-- <h3>Student List:</h3> -->
+<ul id="studentList">
+    
+</ul>
+
+<script>
+
+//  GLOBAL SCOPE 
+let students = [];          // Array
+let emailSet = new Set();   // Set (unique emails)
+let gradeMap = new Map();   // Map (email → grade)
+function addStudent() {
+
+    try {
+
+        // Debugging
+        debugger;
+
+        // Local Scope
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const marks = Number(document.getElementById("marks").value);
+
+        // 
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) { // if @ is not present in  email it will thorugh  an error " invalid email".
+            throw new Error("Invalid Email Format!");
         }
-    </script>
+
+        if (marks < 0 || marks > 100) { 
+            throw new Error("Marks must be between 0 and 100");
+        }
+
+        if (emailSet.has(email)) {  // with has we check email. if email already present return an error.
+            throw new Error("Email already exists!");
+        }
+
+        emailSet.add(email); 
+
+        // ================= OBJECT =================
+        const student = {
+            name,
+            email,
+            marks,
+            date: new Date(),   // JS Date
+            getGrade: function() {
+                return calculateGrade(this.marks);
+            }
+        };   
+        students.push(student);
+        gradeMap.set(email, student.getGrade());
+        displayStudents();
+        clearFields();
+    } catch (error) {
+        alert(error.message);
+    }
+}
+function calculateGrade(marks) {
+    if (marks >= 90) return "A";
+    if (marks >= 75) return "B";
+    if (marks >= 60) return "C";
+    if (marks >= 40) return "D";
+    return "Fail";
+}
+function displayStudents() {
+    const list = document.getElementById("studentList");
+    list.innerHTML = "";
+    // Iteration (forEach)
+    students.forEach((student) => {
+        // Destructuring
+        const { name, email, marks, date } = student;
+        const li = document.createElement("li");
+        li.textContent = `
+        Name: ${name},
+        Email: ${email},
+        Marks: ${marks},
+        Grade: ${gradeMap.get(email)},
+        Added On: ${date.toLocaleDateString()}
+        `;
+        list.appendChild(li);
+    });
+    calculateAverage();
+}
+function calculateAverage() {
+    if (students.length === 0) return;
+    let total = 0;
+    for (let student of students) {   // for...of iteration
+        total += student.marks;
+    }
+    const average = Math.round(total / students.length);
+
+    console.log("Class Average:", average);
+}
+
+// ================= CLEAR INPUT =================
+function clearFields() {
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("marks").value = "";
+}
+function delStudent(){
+    listt=document.getElementById("studentList")
+    listt.innerHTML="";
+    studentss=[];
+}
+</script>
+
 </body>
 </html>
