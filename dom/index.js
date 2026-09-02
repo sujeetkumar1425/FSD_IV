@@ -1,50 +1,64 @@
-const btn=document.getElementById('btn')
-console.log(btn)
-const root=document.getElementById('root')
-console.log(root)
-// const h2 = document.createElement('h2');
-const h1=document.createElement('h1');
-// const img=document.createElement('img');
-const loader=document.createElement('h2');
-loader.innerHTML="Loading.....";
-async function showData(){
-    try{
+const btn = document.getElementById('btn');
+console.log(btn);
+
+const root = document.getElementById('root');
+console.log(root);
+
+const h1 = document.createElement('h1');
+
+const loader = document.createElement('h2');
+loader.innerHTML = "Loading.....";
+
+async function showData() {
+    try {
+        // Show loader before fetching data
+        root.appendChild(loader);
+
         const serverData = await fetch("https://fakestoreapi.com/products");
-    const jsonData= await serverData.json();
-    h1.innerHTML=`<h1 style=color:red>${jsonData[0].title}</h1>`
-    let table=<table>
-        ${
-            jsonData.map((ele)=>{
+        const jsonData = await serverData.json();
+
+        // Heading
+        h1.innerHTML = `<h1 style="color:red">${jsonData[0].title}</h1>`;
+
+        // Create table
+        let table = `
+            <table border="1" cellpadding="10">
                 <tr>
-                    <td>
-                        <img src={ele.image}height=200 width=200> </img>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <th>Image</th>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Price</th>
                 </tr>
-                
-            })
-        }
-    </table>
-    // alert("hii");
-    // h2.innerHTML="welcome to ABES";
-    root.appendChild(loader);
-    // h2.innerHTML="welcome to ABES";
-    // h2.innerHTML="welcome to DOM Manipulation";
-    // root.appendChild(h2);
-    // h1.innerHTML="welcome to DOM Manipulation again..."
-    root.appendChild(h1);
-    // img.src="hello.png";
-    // img.setAttribute('height',200);
-    // img.setAttribute('width',200);
-    // root.appendChild(img);
-    }
-    catch(e){
+
+                ${jsonData.map((ele) => {
+                    return `
+                        <tr>
+                            <td>
+                                <img src="${ele.image}" height="200" width="200">
+                            </td>
+                            <td>${ele.id}</td>
+                            <td>${ele.title}</td>
+                            <td>${ele.price}</td>
+                        </tr>
+                    `;
+                }).join("")}
+
+            </table>
+        `;
+
+        root.appendChild(h1);
+
+        // Add table to webpage
+        root.innerHTML += table;
+
+    } catch (e) {
         console.log(e);
-    }
-    finally{
-        root.removeChild(loader);
+    } finally {
+        // Remove loader
+        if (root.contains(loader)) {
+            root.removeChild(loader);
+        }
     }
 }
-btn.addEventListener('click',showData);
+
+btn.addEventListener('click', showData);
