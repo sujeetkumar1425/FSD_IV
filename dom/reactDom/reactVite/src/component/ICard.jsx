@@ -1,26 +1,23 @@
 import React from "react";
-import studentImage from "../../images/download.jpg";
 
-function ICard(props) {
+function ICard(data) {
   return (
     <div className="id-card">
 
-      <h2>{props.college}</h2>
+      <h2>{data.data.college}</h2>
 
       <img
-        src={studentImage}
+        src={data.data.pic}
         height={100}
         width={100}
+        alt={data.data.name}
       />
 
-      <h3>{props.name}</h3>
+      <h3>{data.data.name}</h3>
 
-      <p>{props.rollNo}</p>
-
-      <p>{props.branch}</p>
-
-      <p>{props.number}</p>
-      //test
+      <p>{data.data.roll}</p>
+      <p>{data.data.branch}</p>
+      <p>{data.data.college}</p>
 
     </div>
   );
